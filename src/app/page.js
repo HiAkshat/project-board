@@ -50,6 +50,32 @@ export default function Home() {
       return
     }
 
+    // Task dragged to another col
+    const newSourceTaskIds = Array.from(sourceCol.taskIds)
+    const [removed] = newSourceTaskIds.splice(sourceCol.index, 1)
+    const newSourceCol = {
+      ...sourceCol,
+      taskIds: newSourceTaskIds
+    }
+    
+    const newDestinationTaskIds = Array.from(destinationCol.taskIds)
+    newDestinationTaskIds.splice(destination.index, 0, removed)
+    const newDestinationCol = {
+      ...destinationCol,
+      taskIds: newDestinationTaskIds
+    }
+
+    const newCardData = {
+      ...cardData,
+      columns: {
+        ...cardData.columns,
+        [newSourceCol.id]: newSourceCol,
+        [newDestinationCol.id]: newDestinationCol
+      }
+    }
+
+    setCardData(newCardData)
+    return
   }
 
   return (
