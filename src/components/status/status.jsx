@@ -12,15 +12,26 @@ export default function Status({column, tasks}) {
           <button>New</button>
       </div>
 
-      <div className="flex flex-col gap-2">
-        {tasks.map(task => {
-          return (
-            <div key={task.id}>
-              <Task task={task} />
-            </div>
-          )
-        })}
-      </div>
+      <Droppable droppableId={column.id}>
+        {(provided)  => (
+          <div className="flex flex-col gap-2" ref={provided.innerRef} {...provided.droppableProps}>
+            {tasks.map((task, index) => (
+              <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
+                {(draggableProvided, draggableSnapshot) => (
+                  <div
+                    ref={draggableProvided.innerRef}
+                    {...draggableProvided.draggableProps}
+                    {...draggableProvided.dragHandleProps}
+                  >
+                    <Task task={task} />
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </div>
   )
 }
