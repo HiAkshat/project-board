@@ -1,6 +1,7 @@
 import { Draggable, Droppable } from "@hello-pangea/dnd"
 import Task from "../task/task"
 import AddIcon from '@mui/icons-material/Add';
+import Link from "next/link";
 
 export default function Status({column, tasks}) {
   return (
@@ -10,9 +11,7 @@ export default function Status({column, tasks}) {
           <span className="bg-[#EE5959] px-2 py-1 rounded-xl">{column.title}</span>
           <span className="text-[#B5B5B5]">{tasks.length}</span>
         </div>
-        <button>
-          <span className="text-[#B5B5B5]"><AddIcon /></span>
-        </button>
+        <span className="text-[#B5B5B5]"><AddIcon /></span>
       </div>
 
       <Droppable droppableId={column.id}>

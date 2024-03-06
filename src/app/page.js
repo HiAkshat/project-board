@@ -2,12 +2,16 @@
 
 import Image from "next/image";
 import Status from "@/components/status/status";
-import initialCardData from "@/data/initialData";
-import { useState } from "react";
+import initialProjectData from "@/data/initialData";
+import { useEffect, useState } from "react";
 import { DragDropContext } from "@hello-pangea/dnd";
+import { useAtom } from "jotai";
+import { projectAtom } from "./atom";
+import { Provider } from "jotai";
 
 export default function Home() {
-  const [cardData, setCardData] = useState(initialCardData)
+  const [projectData, setProjectData] = useAtom(projectAtom)
+  // const [projectData, setProjectData] = useState(initialProjectData)
 
   const reorderCol = (sourceCol, startInd, endInd) => {
     const newTaskIds = Array.from(sourceCol.taskIds)
@@ -29,8 +33,8 @@ export default function Home() {
     // Task dropped to unknown position
     if (!destination) return
 
-    const sourceCol = cardData.columns[source.droppableId];
-    const destinationCol = cardData.columns[destination.droppableId];
+    const sourceCol = projectData.columns[source.droppableId];
+    const destinationCol = projectData.columns[destination.droppableId];
     
     // Task dragged and dropped at same position
     if (sourceCol===destinationCol && destination.index===source.index) return
@@ -38,15 +42,15 @@ export default function Home() {
     // Task dragged to different position in same col
     if (sourceCol===destinationCol && destination.index!=source.index){
       const newCol = reorderCol(sourceCol, source.index, destination.index)
-      const newCardData = {
-        ...cardData,
+      const newProjectData = {
+        ...projectData,
         columns: {
-          ...cardData.columns,
+          ...projectData.columns,
           [newCol.id]: newCol
         }
       }
 
-      setCardData(newCardData)
+      setProjectData(newProjectData)
       return
     }
 
@@ -65,36 +69,40 @@ export default function Home() {
       taskIds: newDestinationTaskIds
     }
 
-    const newCardData = {
-      ...cardData,
+    const newProjectData = {
+      ...projectData,
       columns: {
-        ...cardData.columns,
+        ...projectData.columns,
         [newSourceCol.id]: newSourceCol,
         [newDestinationCol.id]: newDestinationCol
       }
     }
 
-    setCardData(newCardData)
+    setProjectData(newProjectData)
     return
   }
-
+    
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <main className="py-5 px-3">
-        <div className="flex gap-4">
-          {cardData.columnOrder.map(columnId => {
-            const column = cardData.columns[columnId]
-            const tasks = column.taskIds.map((taskId) => cardData.tasks[taskId]);
+      <Provider>
+        <main className="py-5 px-3">
+          <div className="flex gap-4">
+            {projectData.columnOrder.map(columnId => {
+              const column = projectData.columns[columnId]
+              const tasks = column.taskIds.map((taskId) => projectData.tasks[taskId]);
 
-            return (
-              <div key={columnId}>
-                <Status column={column} tasks={tasks} />
-              </div>
-            )
-          })}
-        </div>
-        {/* <Status /> */}
-      </main>
+              return (
+                <div key={columnId}>
+                  <Status column={column} tasks={tasks} />
+                </div>
+              )
+            })}
+          </div>
+          {/* <Status /> */}
+        </main>
+      </Provider>
     </DragDropContext>
   );
+
 }
+

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const initialCardData = {
+const initialProjectData = {
   tasks: {
     [1]: { id: 1, title: "Configure Next.js application", desc: ""},
     [2]: { id: 2, title: "Configure Next.js and tailwind ", desc: ""},
@@ -32,4 +32,4 @@ const initialCardData = {
   columnOrder: ["column-1", "column-2", "column-3"],
 };
 
-export default initialCardData
+export default initialProjectData
