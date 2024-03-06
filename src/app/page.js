@@ -52,7 +52,7 @@ export default function Home() {
 
     // Task dragged to another col
     const newSourceTaskIds = Array.from(sourceCol.taskIds)
-    const [removed] = newSourceTaskIds.splice(sourceCol.index, 1)
+    const [removed] = newSourceTaskIds.splice(source.index, 1)
     const newSourceCol = {
       ...sourceCol,
       taskIds: newSourceTaskIds
@@ -80,7 +80,7 @@ export default function Home() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <main className="p-2">
+      <main className="py-5 px-3">
         <div className="flex gap-4">
           {cardData.columnOrder.map(columnId => {
             const column = cardData.columns[columnId]
