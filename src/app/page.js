@@ -91,10 +91,6 @@ export default function Home() {
     return
   }
 
-  const handleConsole = ()=>{
-    console.log(projectData)
-  }
-
   const handleNewStatus = () => {
     const newId = uuidv4()
     const newCol = {
@@ -106,10 +102,12 @@ export default function Home() {
   const [statusInputVisible, setStatusInputVisible] = useState(false)
   const [statusInputText, setStatusInputText] = useState("")
   const handleAddNewStatus = () => {
+    const colors = ["#ffccd1", "#fbeecc", "#cce7e1", "#cccfe7", "#e7cce3", "#97afd4"]
+
     const newId = uuidv4()
     const newCol = {
       id: newId,
-      color: "#cce7e1",
+      color: colors[Math.floor(Math.random() * colors.length)],
       title: statusInputText,
       taskIds: []
     }
