@@ -13,7 +13,7 @@ import {
 
 export default function Status({column, tasks}) {
   return (
-    <div className="flex flex-col gap-3 w-[300px] p-3 bg-[#2A2A2A] rounded-md">
+    <div className="flex flex-col gap-3 w-[300px]  p-3 bg-[#2A2A2A] rounded-lg">
       <div className="flex justify-between">
         <div className="flex gap-2 items-center">
           <span style={{backgroundColor: column.color}} className={`px-1 py-0 rounded-sm text-sm text-black`}>{column.title}</span>

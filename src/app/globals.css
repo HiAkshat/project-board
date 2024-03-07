@@ -101,6 +101,8 @@
 }
 
 body {
+  max-width: 1368px;
+  margin: auto;
   background-color: #181818;
   color: white;
   font-family: "Inter", sans-serif;
@@ -131,6 +133,11 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.masonry-col{
+  /* background-color: pink; */
+  width: auto !important;
 }
 
 @layer utilities {

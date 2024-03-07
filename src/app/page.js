@@ -11,7 +11,15 @@ import DoneIcon from '@mui/icons-material/Done';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from "react";
 
+import Masonry from 'react-masonry-css'
+
 export default function Home() {
+  const breakpointColumnsObj = {
+    default: 4, // Number of columns by default
+    1100: 2,   // Number of columns at 1100px screen width and above
+    640: 1,    // Number of columns at 700px screen width and above
+  };
+
   const [projectData, setProjectData] = useAtom(projectAtom)
 
   const reorderCol = (sourceCol, startInd, endInd) => {
@@ -95,6 +103,7 @@ export default function Home() {
     }
   }
   
+  const [statusInputVisible, setStatusInputVisible] = useState(false)
   const [statusInputText, setStatusInputText] = useState("")
   const handleAddNewStatus = () => {
     const newId = uuidv4()
@@ -118,42 +127,44 @@ export default function Home() {
     }
 
     setProjectData(newProjectData)
-    console.log(newProjectData)
+    setStatusInputVisible(false)
+
     return
   }
 
-
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-        <main className="flex flex-col gap-5 py-5 px-3">
+        <main className="flex flex-col gap-5 py-5 px-3 ">
           {/* <button onClick={handleConsole}>Console</button> */}
-          <span className="title-text bg-blue-50 max-w-fit">Project Board</span>
+          <span className="title-text max-w-fit">Project Board</span>
 
-          <div className="place-self-start flex gap-1 text-[#272727] text-sm rounded-md">
+          <div className="place-self-start flex gap-1 text-[#272727] text-sm rounded-md min-h-[33px]">
             <button onClick={handleNewStatus} className="flex items-center gap-0  px-2 py-1 border-2 border-[#454545] rounded-md">
-              <span className="status-bg">+ new status</span>
+              <span className="status-bg" onClick={() => setStatusInputVisible(true)}>+ new status</span>
             </button>
-            {/* <StatusInput /> */}
-            <div className="flex">
+            <div className={`${statusInputVisible ? "" : "hidden"} flex`}>
               <input className="bg-transparent border-2 border-[#454545] text-white outline-none text-sm px-2 py-1 rounded-md rounded-r-none" value={statusInputText} onChange={e => setStatusInputText(e.target.value)} placeholder="status title" type="text" />
-              <button onClick={handleAddNewStatus} className="text-white px-2 py-1 border-2 border-[#454545] rounded-md rounded-l-none h-full"><DoneIcon /></button>
+              <button onClick={handleAddNewStatus} className="text-white px-2 py-1 border-2 border-[#454545] rounded-md rounded-l-none h-full"><DoneIcon fontSize="small"/></button>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="flex min-w-full max-w-min gap-3"
+            columnClassName="flex flex-col gap-3 w-[300px] masonry-col"
+          >
             {projectData.columnOrder.map(columnId => {
               const column = projectData.columns[columnId]
               const tasks = column.taskIds.map((taskId) => projectData.tasks[taskId]);
 
               return (
-                <div key={columnId}>
+                <div className="w-fit" key={columnId}>
                   <Status column={column} tasks={tasks} />
                 </div>
               )
             })}
 
-          </div>
+          </Masonry>
         </main>
     </DragDropContext>
   );
