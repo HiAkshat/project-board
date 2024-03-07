@@ -1,17 +1,12 @@
 "use client"
 
-import Image from "next/image";
 import Status from "@/components/status/status";
-import initialProjectData from "@/data/initialData";
-import { useEffect, useState } from "react";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { useAtom } from "jotai";
 import { projectAtom } from "./atom";
-import { Provider } from "jotai";
 
 export default function Home() {
   const [projectData, setProjectData] = useAtom(projectAtom)
-  // const [projectData, setProjectData] = useState(initialProjectData)
 
   const reorderCol = (sourceCol, startInd, endInd) => {
     const newTaskIds = Array.from(sourceCol.taskIds)
@@ -81,11 +76,15 @@ export default function Home() {
     setProjectData(newProjectData)
     return
   }
-    
+
+  const handleConsole = ()=>{
+    console.log(projectData)
+  }
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Provider>
         <main className="py-5 px-3">
+          {/* <button onClick={handleConsole}>Console</button> */}
           <div className="flex gap-4">
             {projectData.columnOrder.map(columnId => {
               const column = projectData.columns[columnId]
@@ -100,9 +99,6 @@ export default function Home() {
           </div>
           {/* <Status /> */}
         </main>
-      </Provider>
     </DragDropContext>
   );
-
 }
-

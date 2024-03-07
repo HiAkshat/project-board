@@ -1,13 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { useAtom } from "jotai"
-import { projectAtom } from "../atom"
+import { useAtom, useStore } from "jotai"
+import { projectAtom } from "@/app/atom"
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from "next/navigation";
-import { Provider } from "jotai";
 
-export default function Page({colId}) {
+export default function NewTask({colId}) {
   const router = useRouter()
   const [title, setTitle] = useState("")
   const [desc, setDesc] = useState("")
@@ -31,6 +30,7 @@ export default function Page({colId}) {
     }
 
     const newProjectData = {
+      ...projectData,
       tasks: {
         ...projectData.tasks,
         [newId]: task
@@ -38,7 +38,7 @@ export default function Page({colId}) {
       columns: {
         ...projectData.columns,
         [sourceCol.id]: newCol
-      }
+      },
     }
 
     setProjectData(newProjectData)
