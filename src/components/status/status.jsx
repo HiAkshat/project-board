@@ -53,9 +53,9 @@ export default function Status({column, tasks}) {
               <span className="text-[#B5B5B5]"><MoreHorizIcon fontSize="small"/></span>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>
-                <button onClick={handleStatusDelete}>Delete</button>
-              </DropdownMenuItem>
+                <button className="flex w-full px-2 py-1" onClick={handleStatusDelete}>
+                  <span className="text-left">Delete</span>
+                </button>
             </DropdownMenuContent>
           </DropdownMenu>
 
