@@ -11,14 +11,32 @@ import {
 } from "@/components/ui/dialog"
 
 
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
+
+
 export default function EditTask({taskId, colId, index}) {
   const [projectData, setProjectData] = useAtom(projectAtom)
   const task = projectData.tasks[taskId]
-  const sourceCol = projectData.columns[colId]
   
   const [title, setTitle] = useState(task.title)
   const [desc, setDesc] = useState(task.desc)
+
+  const [open, setOpen] = useState(false)
   const [selectedCol, setSelectedCol] = useState(colId)
+  const currCol = colId
 
   const handleSave = () => {
     const newTask = {
@@ -27,13 +45,37 @@ export default function EditTask({taskId, colId, index}) {
       desc: desc
     }
 
-    console.log(newTask)
+    let newProjectData
 
-    const newProjectData = {
-      ...projectData,
-      tasks: {
-        ...projectData.tasks,
-        [taskId]: newTask
+    if (currCol===selectedCol){
+      newProjectData = {
+        ...projectData,
+        tasks: {
+          ...projectData.tasks,
+          [taskId]: newTask
+        },
+      }
+    }
+
+    else{
+      const oldCol = projectData.columns[currCol]
+      const newCol = projectData.columns[selectedCol]
+      const currTaskId = taskId
+
+      oldCol.taskIds = oldCol.taskIds.filter(taskId => taskId !== currTaskId);
+      newCol.taskIds.push(currTaskId)
+
+      newProjectData = {
+        ...projectData,
+        tasks: {
+          ...projectData.tasks,
+          [taskId]: newTask
+        },
+        columns: {
+          ...projectData.columns,
+          [currCol]: oldCol,
+          [selectedCol]: newCol
+        }
       }
     }
 
@@ -51,7 +93,7 @@ export default function EditTask({taskId, colId, index}) {
     // newProjectData.columns.taskIds.filter((id) => id !== taskId);
 
     setProjectData(newProjectData)
-    console.log(newProjectData)
+    // console.log(newProjectData)
     return
   }
 
@@ -66,12 +108,45 @@ export default function EditTask({taskId, colId, index}) {
         <textarea className="bg-[#383838] py-1 px-2 rounded-md outline-none resize-none h-[20vh]" placeholder="Add Description" value={desc} onChange={e => setDesc(e.target.value)} type="text" />
       </div>
 
+      <div className="flex flex-col gap-2">
+        <span className="text-sm text-[#b5b5b5]">Change Status</span>
+        <Popover className="text-black" open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <button style={{backgroundColor: projectData.columns[selectedCol].color}} className="px-1 py-0 rounded-sm text-sm text-black w-max">
+              {selectedCol ? <>{projectData.columns[selectedCol].title}</> : <>+ Set status</>}
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="p-0" side="right" align="start">
+            <Command>
+              <CommandInput placeholder="Change status..." />
+              <CommandList>
+                <CommandEmpty>No results found.</CommandEmpty>
+                <CommandGroup>
+                  {projectData.columnOrder.map((colId) => (
+                    <CommandItem
+                      key={colId}
+                      value={colId}
+                      onSelect={(value) => {
+                        setSelectedCol(value || null)
+                        setOpen(false)
+                      }}
+                    >
+                      <span className="">{projectData.columns[colId].title}</span>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      </div>
+
       <div className="flex gap-2 justify-end items-center">
         <DialogClose className="h-full">
           <div className="flex  h-full cursor-pointer" onClick={handleSave}>
             <div className="flex items-center gap-2 bg-[#383838] text-white px-2 py-1 rounded-md">
               <DoneIcon />
-              <button className="">Save to {sourceCol.title}</button>
+              <button className="">Save</button>
             </div>
           </div>
         </DialogClose>
