@@ -2,9 +2,9 @@ import { Draggable, Droppable } from "@hello-pangea/dnd"
 import Task from "../task/task"
 import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import Link from "next/link";
 import NewTask from "../newTask/newTask";
 import EditTask from "../editTask/editTask";
+import { useAtom } from "jotai";
 
 import {
   Dialog,
@@ -12,7 +12,32 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { projectAtom } from "@/app/atom";
+
 export default function Status({column, tasks}) {
+  const [projectData, setProjectData] = useAtom(projectAtom)
+  
+  const handleStatusDelete = () => {
+    const newProjectData = {
+      ...projectData
+    }
+
+    const currId = column.id
+    delete newProjectData.columns[currId]
+    newProjectData.columnOrder = newProjectData.columnOrder.filter(colId => colId !== currId)
+
+    setProjectData(newProjectData)
+    return
+  }
+
   return (
     <div className="flex flex-col gap-3 w-[300px]  p-3 bg-[#2A2A2A] rounded-lg">
       <div className="flex justify-between">
@@ -21,17 +46,27 @@ export default function Status({column, tasks}) {
           <span className="text-[#B5B5B5] text-sm">{tasks.length}</span>
         </div>
 
-        <div className="flex items-center gap-2">
-        <span className="text-[#B5B5B5]"><MoreHorizIcon fontSize="small"/></span>
 
-        <Dialog>
-          <DialogTrigger>
-            <span className="text-[#B5B5B5]"><AddIcon fontSize="small"/></span>
-          </DialogTrigger>
-          <DialogContent className="bg-transparent">
-            <NewTask colId={column.id} />
-          </DialogContent>
-        </Dialog>  
+        <div className="flex items-center gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <span className="text-[#B5B5B5]"><MoreHorizIcon fontSize="small"/></span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <button onClick={handleStatusDelete}>Delete</button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Dialog>
+            <DialogTrigger>
+              <span className="text-[#B5B5B5]"><AddIcon fontSize="small"/></span>
+            </DialogTrigger>
+            <DialogContent className="bg-transparent">
+              <NewTask colId={column.id} />
+            </DialogContent>
+          </Dialog>  
         </div>
       </div>
 
