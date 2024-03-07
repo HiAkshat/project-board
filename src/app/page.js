@@ -4,8 +4,12 @@ import Status from "@/components/status/status";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { useAtom } from "jotai";
 import { projectAtom } from "./atom";
+
 import AddIcon from '@mui/icons-material/Add';
+import DoneIcon from '@mui/icons-material/Done';
+
 import { v4 as uuidv4 } from 'uuid';
+import { useState } from "react";
 
 export default function Home() {
   const [projectData, setProjectData] = useAtom(projectAtom)
@@ -87,15 +91,57 @@ export default function Home() {
     const newId = uuidv4()
     const newCol = {
       id: newId,
-      color: "cce7e1"
+      color: "#cce7e1"
     }
   }
+  
+  const [statusInputText, setStatusInputText] = useState("")
+  const handleAddNewStatus = () => {
+    const newId = uuidv4()
+    const newCol = {
+      id: newId,
+      color: "#cce7e1",
+      title: statusInputText,
+      taskIds: []
+    }
+
+    const newColumnOrder = projectData.columnOrder
+    newColumnOrder.push(newId)
+
+    const newProjectData = {
+      ...projectData,
+      columns: {
+        ...projectData.columns,
+        [newId]: newCol
+      },
+      columnOrder: newColumnOrder
+    }
+
+    setProjectData(newProjectData)
+    console.log(newProjectData)
+    return
+  }
+
+
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-        <main className="py-5 px-3">
+        <main className="flex flex-col gap-5 py-5 px-3">
           {/* <button onClick={handleConsole}>Console</button> */}
-          <div className="flex gap-3">
+          <span className="title-text bg-blue-50 max-w-fit">Project Board</span>
+
+          <div className="place-self-start flex gap-1 text-[#272727] text-sm rounded-md">
+            <button onClick={handleNewStatus} className="flex items-center gap-0  px-2 py-1 border-2 border-[#454545] rounded-md">
+              <span className="status-bg">+ new status</span>
+            </button>
+            {/* <StatusInput /> */}
+            <div className="flex">
+              <input className="bg-transparent border-2 border-[#454545] text-white outline-none text-sm px-2 py-1 rounded-md rounded-r-none" value={statusInputText} onChange={e => setStatusInputText(e.target.value)} placeholder="status title" type="text" />
+              <button onClick={handleAddNewStatus} className="text-white px-2 py-1 border-2 border-[#454545] rounded-md rounded-l-none h-full"><DoneIcon /></button>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
             {projectData.columnOrder.map(columnId => {
               const column = projectData.columns[columnId]
               const tasks = column.taskIds.map((taskId) => projectData.tasks[taskId]);
@@ -107,13 +153,6 @@ export default function Home() {
               )
             })}
 
-            <div className="place-self-start flex gap-1 text-[#272727] text-sm rounded-md">
-              <button onClick={handleNewStatus} className="flex items-center gap-0 status-bg px-1 py-[2px] rounded-md">
-                <span className="text-[#272727]"><AddIcon fontSize="small"/></span>
-                <span>new status</span>
-              </button>
-
-            </div>
           </div>
         </main>
     </DragDropContext>

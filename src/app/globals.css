@@ -118,6 +118,19 @@ body {
 .status-bg{
   background: rgb(255,204,209);
   background: linear-gradient(95deg, rgba(255,204,209,1) 0%, rgba(251,238,204,1) 50%, rgba(204,231,225,1) 100%, rgba(0,0,0,1));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-text{
+  font-size: 72px;
+  font-weight: 700;
+  background: linear-gradient(95deg, rgba(255,204,209,1) 0%, rgba(251,238,204,1) 50%, rgba(204,231,225,1) 100%, rgba(0,0,0,1));
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @layer utilities {
