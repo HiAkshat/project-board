@@ -33,7 +33,7 @@ export default function Status({column, tasks}) {
         {(provided)  => (
           <div className="flex flex-col gap-2" ref={provided.innerRef} {...provided.droppableProps}>
             {tasks.map((task, index) => (
-              <Dialog>
+              <Dialog key={task.id}>
                 <DialogTrigger>
                   <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
                     {(draggableProvided, draggableSnapshot) => (
@@ -48,7 +48,7 @@ export default function Status({column, tasks}) {
                   </Draggable>
                 </DialogTrigger>
                 <DialogContent>
-                  <EditTask taskId={task.id} colId={column.id} />
+                  <EditTask taskId={task.id} colId={column.id} index={index} />
                 </DialogContent>
               </Dialog>
             ))}
