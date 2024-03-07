@@ -3,6 +3,7 @@ import Task from "../task/task"
 import AddIcon from '@mui/icons-material/Add';
 import Link from "next/link";
 import NewTask from "../newTask/newTask";
+import EditTask from "../editTask/editTask";
 
 import {
   Dialog,
@@ -32,17 +33,24 @@ export default function Status({column, tasks}) {
         {(provided)  => (
           <div className="flex flex-col gap-2" ref={provided.innerRef} {...provided.droppableProps}>
             {tasks.map((task, index) => (
-              <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
-                {(draggableProvided, draggableSnapshot) => (
-                  <div
-                    ref={draggableProvided.innerRef}
-                    {...draggableProvided.draggableProps}
-                    {...draggableProvided.dragHandleProps}
-                  >
-                    <Task task={task} />
-                  </div>
-                )}
-              </Draggable>
+              <Dialog>
+                <DialogTrigger>
+                  <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
+                    {(draggableProvided, draggableSnapshot) => (
+                      <div
+                        ref={draggableProvided.innerRef}
+                        {...draggableProvided.draggableProps}
+                        {...draggableProvided.dragHandleProps}
+                      >
+                        <Task task={task} colId={column.id} />
+                      </div>
+                    )}
+                  </Draggable>
+                </DialogTrigger>
+                <DialogContent>
+                  <EditTask taskId={task.id} colId={column.id} />
+                </DialogContent>
+              </Dialog>
             ))}
             {provided.placeholder}
           </div>
