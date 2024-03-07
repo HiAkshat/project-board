@@ -13,16 +13,19 @@ const initialProjectData = {
   columns: {
     "column-1": {
       id: "column-1",
-      title: "To-Do",
+      color: "#ffccd1",
+      title: "Not started",
       taskIds: [1, 2, 3, 4, 5, 6],
     },
     "column-2": {
       id: "column-2",
-      title: "In Progress",
+      color: "#fbeecc",
+      title: "In progress",
       taskIds: [],
     },
     "column-3": {
       id: "column-3",
+      color: "#cce7e1",
       title: "Completed",
       taskIds: [],
     },

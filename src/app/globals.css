@@ -106,6 +106,20 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+.truncated-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  /* max-height: 2.5em; */
+  text-overflow: ellipsis;
+}
+
+.status-bg{
+  background: rgb(255,204,209);
+  background: linear-gradient(95deg, rgba(255,204,209,1) 0%, rgba(251,238,204,1) 50%, rgba(204,231,225,1) 100%, rgba(0,0,0,1));
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

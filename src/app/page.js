@@ -4,6 +4,8 @@ import Status from "@/components/status/status";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { useAtom } from "jotai";
 import { projectAtom } from "./atom";
+import AddIcon from '@mui/icons-material/Add';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {
   const [projectData, setProjectData] = useAtom(projectAtom)
@@ -81,11 +83,19 @@ export default function Home() {
     console.log(projectData)
   }
 
+  const handleNewStatus = () => {
+    const newId = uuidv4()
+    const newCol = {
+      id: newId,
+      color: "cce7e1"
+    }
+  }
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
         <main className="py-5 px-3">
           {/* <button onClick={handleConsole}>Console</button> */}
-          <div className="flex gap-4">
+          <div className="flex gap-3">
             {projectData.columnOrder.map(columnId => {
               const column = projectData.columns[columnId]
               const tasks = column.taskIds.map((taskId) => projectData.tasks[taskId]);
@@ -96,8 +106,15 @@ export default function Home() {
                 </div>
               )
             })}
+
+            <div className="place-self-start flex gap-1 text-[#272727] text-sm rounded-md">
+              <button onClick={handleNewStatus} className="flex items-center gap-0 status-bg px-1 py-[2px] rounded-md">
+                <span className="text-[#272727]"><AddIcon fontSize="small"/></span>
+                <span>new status</span>
+              </button>
+
+            </div>
           </div>
-          {/* <Status /> */}
         </main>
     </DragDropContext>
   );

@@ -21,8 +21,8 @@ export default function Task({task, colId}) {
   // )
 
   return (
-    <div className="bg-[#404040] rounded-md px-2 py-1">
-      <span>{task.title}</span>
+    <div className="flex justify-start bg-[#404040] rounded-sm px-2 py-1">
+      <span className="text-left truncated-text">{task.title}</span>
     </div>
   )
 }

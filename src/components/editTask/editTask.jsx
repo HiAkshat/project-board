@@ -18,6 +18,7 @@ export default function EditTask({taskId, colId, index}) {
   
   const [title, setTitle] = useState(task.title)
   const [desc, setDesc] = useState(task.desc)
+  const [selectedCol, setSelectedCol] = useState(colId)
 
   const handleSave = () => {
     const newTask = {
@@ -57,9 +58,11 @@ export default function EditTask({taskId, colId, index}) {
   return (
     <div className="flex flex-col gap-3 p-3 bg-[#1e1e1e] borde border-white rounded-xl">
       <div className="flex flex-col gap-2 text-xl">
+        <span className="text-sm text-[#b5b5b5]">Title</span>
         <input className="bg-[#383838] py-2 px-3 rounded-md outline-none" placeholder="Add Title" value={title} onChange={e => setTitle(e.target.value)} type="text" />
       </div>
       <div className="flex flex-col gap-2">
+        <span className="text-sm text-[#b5b5b5]">Description</span>
         <textarea className="bg-[#383838] py-1 px-2 rounded-md outline-none resize-none h-[20vh]" placeholder="Add Description" value={desc} onChange={e => setDesc(e.target.value)} type="text" />
       </div>
 
