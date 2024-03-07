@@ -38,7 +38,7 @@
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
  
-    --popover: 0, 0%, 22%;
+    --popover: 0 0 12;
     --popover-foreground: 210 40% 98%;
  
     --primary: 210 40% 98%;
@@ -50,7 +50,7 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 0 0 71;
  
-    --accent: 0 0 12;
+    --accent: 0, 0%, 22% ;
     --accent-foreground: 210 40% 98%;
  
     --destructive: 0 62.8% 30.6%;
@@ -103,9 +103,12 @@
 body {
   max-width: 1368px;
   margin: auto;
-  background-color: #181818;
+  /* background-color: #181818; */
   color: white;
   font-family: "Inter", sans-serif;
+
+  background: rgb(0,0,0);
+  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgb(44, 30, 52) 100%);
 }
 
 .truncated-text {

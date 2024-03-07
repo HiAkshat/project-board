@@ -1,6 +1,7 @@
 import { Draggable, Droppable } from "@hello-pangea/dnd"
 import Task from "../task/task"
 import AddIcon from '@mui/icons-material/Add';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Link from "next/link";
 import NewTask from "../newTask/newTask";
 import EditTask from "../editTask/editTask";
@@ -19,14 +20,19 @@ export default function Status({column, tasks}) {
           <span style={{backgroundColor: column.color}} className={`px-1 py-0 rounded-sm text-sm text-black`}>{column.title}</span>
           <span className="text-[#B5B5B5] text-sm">{tasks.length}</span>
         </div>
+
+        <div className="flex items-center gap-2">
+        <span className="text-[#B5B5B5]"><MoreHorizIcon fontSize="small"/></span>
+
         <Dialog>
-            <DialogTrigger>
-              <span className="text-[#B5B5B5]"><AddIcon fontSize="small"/></span>
-            </DialogTrigger>
-            <DialogContent className="bg-transparent">
-              <NewTask colId={column.id} />
-            </DialogContent>
-          </Dialog>  
+          <DialogTrigger>
+            <span className="text-[#B5B5B5]"><AddIcon fontSize="small"/></span>
+          </DialogTrigger>
+          <DialogContent className="bg-transparent">
+            <NewTask colId={column.id} />
+          </DialogContent>
+        </Dialog>  
+        </div>
       </div>
 
       <Droppable droppableId={column.id}>

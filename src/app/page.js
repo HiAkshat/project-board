@@ -141,7 +141,7 @@ export default function Home() {
               <span className="status-bg" onClick={() => setStatusInputVisible(true)}>+ new status</span>
             </button>
             <div className={`${statusInputVisible ? "" : "hidden"} flex`}>
-              <input className="bg-transparent border-2 border-[#454545] text-white outline-none text-sm px-2 py-1 rounded-md rounded-r-none" value={statusInputText} onChange={e => setStatusInputText(e.target.value)} placeholder="status title" type="text" />
+              <input className="bg-transparent border-2 border-[#454545] text-white outline-none text-sm px-2 py-1 rounded-md rounded-r-none border-r-0" value={statusInputText} onChange={e => setStatusInputText(e.target.value)} placeholder="status title" type="text" />
               <button onClick={handleAddNewStatus} className="text-white px-2 py-1 border-2 border-[#454545] rounded-md rounded-l-none h-full"><DoneIcon fontSize="small"/></button>
             </div>
           </div>
