@@ -61,7 +61,7 @@ export default function NewTask({colId}) {
       </div>
       <DialogClose>
         <div className="flex justify-end">
-          <button disabled={title==="" ? true : false} onClick={handleSave} className="flex gap-1 items-center bg-[#383838] hover:brightness-110 disabled:text-[#828282] text-white px-2 py-1 rounded-md">
+          <button disabled={title==="" ? true : false} onClick={handleSave} className="flex gap-1 items-center bg-[#383838] enabled:hover:brightness-110 disabled:text-[#828282] text-white px-2 py-1 rounded-md">
             <AddIcon fontSize="small"/>
             <div className="flex gap-2 items-center">
               <span>Add to</span>

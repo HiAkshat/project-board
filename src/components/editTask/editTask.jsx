@@ -144,8 +144,8 @@ export default function EditTask({taskId, colId, index}) {
 
       <div className="flex gap-2 justify-end items-center">
         <DialogClose className="h-full">
-          <div className="flex  h-full cursor-pointer" onClick={handleSave}>
-            <button disabled={title==="" ? true : false} className="flex items-center gap-2 bg-[#383838] hover:brightness-125 disabled:text-[#828282] text-white px-2 py-1 rounded-md">
+          <div className="flex h-full cursor-pointer" onClick={handleSave}>
+            <button disabled={title==="" ? true : false} className="flex items-center gap-2 bg-[#383838] enabled:hover:brightness-125 disabled:text-[#828282] text-white px-2 py-1 rounded-md">
               <DoneIcon />
               <span className="">Save</span>
             </button>
