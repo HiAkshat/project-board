@@ -1,38 +1,22 @@
-import { Draggable, Droppable } from "@hello-pangea/dnd"
-import Task from "../task/task"
-import AddIcon from '@mui/icons-material/Add';
-import DoneIcon from '@mui/icons-material/Done';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import NewTask from "../newTask/newTask";
-import EditTask from "../editTask/editTask";
-import { useAtom, useSetAtom } from "jotai";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import StatusMenu from "../statusMenu/statusMenu";
+import NewTaskButton from "../newTaskButton/newTaskButton";
+import TasksList from "../tasksList/tasksList";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { projectAtom } from "@/app/atom";
+import { useAtom } from "jotai";
 import { useState, useRef, useEffect } from "react";
+
+import DoneIcon from '@mui/icons-material/Done';
 
 export default function Status({column, tasks}) {
   const [projectData, setProjectData] = useAtom(projectAtom)
 
   const span1Ref = useRef(null);
-  const [span1Width, setSpan1Width] = useState(0);
   const [span1Height, setSpan1Height] = useState(0);
   
   const [statusInputVisible, setStatusInputVisible] = useState(false)
-  const [statusInputText, setStatusInputText] = useState("")
+  const [statusInputText, setStatusInputText] = useState(column.title)
 
   const inputStyle = {
     backgroundColor: column.color,
@@ -41,25 +25,9 @@ export default function Status({column, tasks}) {
 
   useEffect(() => {
     if (span1Ref.current) {
-      setSpan1Width(span1Ref.current.getBoundingClientRect().width + 'px');
-    }
-    if (span1Ref.current) {
       setSpan1Height(span1Ref.current.getBoundingClientRect().height + 'px');
     }
-  }, [span1Width, span1Height]);
-  
-  const handleStatusDelete = () => {
-    const newProjectData = {
-      ...projectData
-    }
-
-    const currId = column.id
-    delete newProjectData.columns[currId]
-    newProjectData.columnOrder = newProjectData.columnOrder.filter(colId => colId !== currId)
-
-    setProjectData(newProjectData)
-    return
-  }
+  }, [span1Height]);
 
   const hanldeStatusInput = () => {
     setStatusInputVisible(true)
@@ -99,60 +67,13 @@ export default function Status({column, tasks}) {
           <span className="text-[#B5B5B5] text-sm">{tasks.length}</span>
         </div>
 
-
         <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <span className="text-[#B5B5B5]"><MoreHorizIcon fontSize="small"/></span>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <button className="flex w-full px-2 py-1" onClick={hanldeStatusInput}>
-                  <span className="text-left">Edit title</span>
-                </button>
-                <button className="flex w-full px-2 py-1" onClick={handleStatusDelete}>
-                  <span className="text-left">Delete</span>
-                </button>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <Dialog>
-            <DialogTrigger>
-              <span className="text-[#B5B5B5]"><AddIcon fontSize="small"/></span>
-            </DialogTrigger>
-            <DialogContent className="bg-transparent">
-              <NewTask colId={column.id} />
-            </DialogContent>
-          </Dialog>  
+          <StatusMenu column={column} hanldeStatusInput={hanldeStatusInput}/>
+          <NewTaskButton colId={column.id}/> 
         </div>
       </div>
 
-      <Droppable droppableId={column.id}>
-        {(provided)  => (
-          <div className="flex flex-col gap-3" ref={provided.innerRef} {...provided.droppableProps}>
-            {tasks.map((task, index) => (
-              <Dialog key={task.id}>
-                <DialogTrigger>
-                  <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
-                    {(draggableProvided, draggableSnapshot) => (
-                      <div
-                        ref={draggableProvided.innerRef}
-                        {...draggableProvided.draggableProps}
-                        {...draggableProvided.dragHandleProps}
-                      >
-                        <Task task={task} colId={column.id} />
-                      </div>
-                    )}
-                  </Draggable>
-                </DialogTrigger>
-                <DialogContent>
-                  <EditTask taskId={task.id} colId={column.id} index={index} />
-                </DialogContent>
-              </Dialog>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+      <TasksList colId={column.id} tasks={tasks}/>
     </div>
   )
 }
