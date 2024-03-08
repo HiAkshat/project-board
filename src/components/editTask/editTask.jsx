@@ -113,7 +113,7 @@ export default function EditTask({taskId, colId, index}) {
         <span className="text-sm text-[#b5b5b5]">Change Status</span>
         <Popover className="text-black" open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
-            <button style={{backgroundColor: projectData.columns[selectedCol].color}} className="px-1 py-0 rounded-sm text-sm text-black w-max">
+            <button style={{backgroundColor: projectData.columns[selectedCol].color}} className="px-1 py-0 rounded-sm text-sm hover:brightness-125 text-black w-max">
               {selectedCol ? <>{projectData.columns[selectedCol].title}</> : <>+ Set status</>}
             </button>
           </PopoverTrigger>
@@ -145,7 +145,7 @@ export default function EditTask({taskId, colId, index}) {
       <div className="flex gap-2 justify-end items-center">
         <DialogClose className="h-full">
           <div className="flex  h-full cursor-pointer" onClick={handleSave}>
-            <button disabled={title==="" ? true : false} className="flex items-center gap-2 bg-[#383838] disabled:text-[#828282] text-white px-2 py-1 rounded-md">
+            <button disabled={title==="" ? true : false} className="flex items-center gap-2 bg-[#383838] hover:brightness-125 disabled:text-[#828282] text-white px-2 py-1 rounded-md">
               <DoneIcon />
               <span className="">Save</span>
             </button>
@@ -153,7 +153,7 @@ export default function EditTask({taskId, colId, index}) {
         </DialogClose>
 
         <DialogClose className="h-full">
-          <div className="flex cursor-pointer" onClick={handleDelete}>
+          <div className="flex cursor-pointer hover:brightness-110" onClick={handleDelete}>
             <div className="flex gap-2 bg-[#8c3c3c] text-white p-2 rounded-md">
               <span className="text-[#f08585]"><DeleteIcon /></span>
             </div>

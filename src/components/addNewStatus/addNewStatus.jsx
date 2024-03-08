@@ -52,7 +52,7 @@ export default function AddNewStatus() {
 
   return (
     <div className="place-self-start flex gap-1 text-[#272727] text-sm rounded-md min-h-[33px]">
-      <button onClick={handleNewStatus} className={`${statusInputVisible ? "hidden" : ""} flex items-center gap-0  px-2 py-1 border-2 border-[#454545] rounded-md`}>
+      <button onClick={handleNewStatus} className={`${statusInputVisible ? "hidden" : ""} flex items-center gap-0  px-2 py-1 border-2 border-[#454545] hover:bg-[#181818] rounded-md`}>
         <span className="status-bg" onClick={() => setStatusInputVisible(true)}>+ new status</span>
       </button>
       <div className={`${statusInputVisible ? "" : "hidden"} flex gap-2`}>

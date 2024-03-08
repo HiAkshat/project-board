@@ -3,6 +3,7 @@ import { useAtom } from "jotai"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -31,18 +32,17 @@ export default function StatusMenu({column, hanldeStatusInput}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <span className="text-[#B5B5B5]"><MoreHorizIcon fontSize="small"/></span>
+        <span className="text-[#B5B5B5] hover:text-white"><MoreHorizIcon fontSize="small"/></span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-          <button className="flex items-center gap-2 w-full px-2 py-1" onClick={() => hanldeStatusInput()}>
+          <DropdownMenuItem className="flex items-center hover:bg-[#313131] rounded-md gap-2 w-full px-2 py-1 text-sm cursor-pointer" onClick={() => hanldeStatusInput()}>
             <span className=""><EditIcon fontSize="small"/></span>
             <span className="text-left">Edit title</span>
-          </button>
-          <DropdownMenuSeparator />
-          <button className="flex items-center gap-2 w-full px-2 py-1" onClick={handleStatusDelete}>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex items-center hover:bg-[#313131] rounded-md gap-2 w-full px-2 py-1 text-sm cursor-pointer" onClick={() => hanldeStatusInput()}>
             <span><DeleteIcon fontSize="small"/></span>
             <span className="text-left">Delete</span>
-          </button>
+          </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
