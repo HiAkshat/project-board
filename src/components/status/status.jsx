@@ -54,26 +54,53 @@ export default function Status({column, tasks}) {
   }
 
   return (
-    <div className="flex flex-col gap-3 w-[300px] p-3 bg-[#2A2A2A] rounded-lg">
+    <div className="flex flex-col gap-3 w-full md:w-[300px] p-3 bg-[#2A2A2A] rounded-lg">
       <div className="flex justify-between">
-        <div className="flex gap-2 items-center">
-          <span ref={span1Ref} style={{backgroundColor: column.color}} className={`${statusInputVisible ? "hidden" : ""} px-1 py-0 rounded-sm text-sm text-black`}>{column.title}</span>
-          
-          <div style={{backgroundColor: column.color, height: span1Height}} className={`${statusInputVisible ? "" : "hidden"} flex items-center rounded-sm`}>
-            <input style={inputStyle} className={`status-input px-1 py-0 text-sm rounded-sm rounded-r-none text-black outline-none`} value={statusInputText} onChange={e => setStatusInputText(e.target.value)} placeholder="edit status"/>
-            <button style={{backgroundColor: column.color}} onClick={handleSaveStatusInput} disabled={statusInputText==="" ? true : false} className="flex items-center px-1 py-0 rounded-sm rounded-l-none enabled:hover:brightness-110 h-full text-black disabled:text-[#0000006b]"><DoneIcon fontSize="small"/></button>
+        <div className="flex gap-2 items-center max-w-[70%]">
+          <span
+            ref={span1Ref}
+            style={{ 
+              backgroundColor: column.color,
+              display: statusInputVisible ? "none" : "-webkit-box"
+            }}
+            className={`px-1 py-0 rounded-sm max-w-[150p w-fit text-sm truncated-status text-black`}
+          >
+            {column.title}
+          </span>
+
+          <div
+            style={{ backgroundColor: column.color, height: span1Height }}
+            className={`${
+              statusInputVisible ? "" : "hidden"
+            } flex items-center rounded-sm`}
+          >
+            <input
+              style={inputStyle}
+              className={`status-input px-1 py-0 text-sm rounded-sm rounded-r-none text-black outline-none`}
+              value={statusInputText}
+              onChange={(e) => setStatusInputText(e.target.value)}
+              placeholder="edit status"
+            />
+            <button
+              style={{ backgroundColor: column.color }}
+              onClick={handleSaveStatusInput}
+              disabled={statusInputText === "" ? true : false}
+              className="flex items-center px-1 py-0 rounded-sm rounded-l-none enabled:hover:brightness-110 h-full text-black disabled:text-[#0000006b]"
+            >
+              <DoneIcon fontSize="small" />
+            </button>
           </div>
 
           <span className="text-[#B5B5B5] text-sm">{tasks.length}</span>
         </div>
 
         <div className="flex items-center gap-2">
-          <StatusMenu column={column} hanldeStatusInput={hanldeStatusInput}/>
-          <NewTaskButton colId={column.id}/> 
+          <StatusMenu column={column} hanldeStatusInput={hanldeStatusInput} />
+          <NewTaskButton colId={column.id} />
         </div>
       </div>
 
-      <TasksList colId={column.id} tasks={tasks}/>
+      <TasksList colId={column.id} tasks={tasks} />
     </div>
-  )
+  );
 }

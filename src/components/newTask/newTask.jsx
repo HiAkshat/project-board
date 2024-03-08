@@ -50,7 +50,7 @@ export default function NewTask({colId}) {
   }
 
   return (
-    <div className="flex flex-col gap-3 p-3 bg-[#1e1e1e] rounded-xl">
+    <div className="flex flex-col w-[90%] m-auto md:w-full gap-3 p-3 bg-[#1e1e1e] rounded-xl">
       <div className="flex flex-col gap-2 text-xl">
         <span className="text-sm text-[#b5b5b5]">Title</span>
         <input className="bg-[#383838] py-2 px-3 rounded-md outline-none" placeholder="Add Title" value={title} onChange={e => setTitle(e.target.value)} type="text" />

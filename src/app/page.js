@@ -80,8 +80,8 @@ export default function Home() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <main className="flex flex-col gap-5 py-5 px-3 ">
-        <span className="title-text max-w-fit">Project Board</span>
+      <main className="flex flex-col gap-5 p-3 md:py-5 md:px-6">
+        <span className="title-text text-[54px] md:text-[72px] max-w-fit tracking-tighter md:tracking-normal">Project Board</span>
         <AddNewStatus />
         <StatusGrid projectData={projectData} />
       </main>

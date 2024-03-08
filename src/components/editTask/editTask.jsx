@@ -99,7 +99,7 @@ export default function EditTask({taskId, colId, index}) {
   }
 
   return (
-    <div className="flex flex-col gap-3 p-3 bg-[#1e1e1e] borde border-white rounded-xl">
+    <div className="flex flex-col w-[90%] m-auto md:w-full gap-3 p-3 bg-[#1e1e1e] rounded-xl">
       <div className="flex flex-col gap-2 text-xl">
         <span className="text-sm text-[#b5b5b5]">Title</span>
         <input className="bg-[#383838] py-2 px-3 rounded-md outline-none" placeholder="Add Title" value={title} onChange={e => setTitle(e.target.value)} type="text" />
@@ -113,7 +113,7 @@ export default function EditTask({taskId, colId, index}) {
         <span className="text-sm text-[#b5b5b5]">Change Status</span>
         <Popover className="text-black" open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
-            <button style={{backgroundColor: projectData.columns[selectedCol].color}} className="px-1 py-0 rounded-sm text-sm hover:brightness-125 text-black w-max">
+            <button style={{backgroundColor: projectData.columns[selectedCol].color}} className="px-1 py-0 rounded-sm text-sm hover:brightness-110 text-black w-max">
               {selectedCol ? <>{projectData.columns[selectedCol].title}</> : <>+ Set status</>}
             </button>
           </PopoverTrigger>
@@ -142,7 +142,7 @@ export default function EditTask({taskId, colId, index}) {
         </Popover>
       </div>
 
-      <div className="flex gap-2 justify-end items-center">
+      <div className="flex gap-2 justify-end items-center h-[40px]">
         <DialogClose className="h-full">
           <div className="flex h-full cursor-pointer" onClick={handleSave}>
             <button disabled={title==="" ? true : false} className="flex items-center gap-2 bg-[#383838] enabled:hover:brightness-125 disabled:text-[#828282] text-white px-2 py-1 rounded-md">
@@ -153,7 +153,7 @@ export default function EditTask({taskId, colId, index}) {
         </DialogClose>
 
         <DialogClose className="h-full">
-          <div className="flex cursor-pointer hover:brightness-110" onClick={handleDelete}>
+          <div className="flex h-full cursor-pointer hover:brightness-110" onClick={handleDelete}>
             <div className="flex gap-2 bg-[#8c3c3c] text-white p-2 rounded-md">
               <span className="text-[#f08585]"><DeleteIcon /></span>
             </div>

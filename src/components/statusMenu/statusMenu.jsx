@@ -39,7 +39,7 @@ export default function StatusMenu({column, hanldeStatusInput}) {
             <span className=""><EditIcon fontSize="small"/></span>
             <span className="text-left">Edit title</span>
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center hover:bg-[#313131] rounded-md gap-2 w-full px-2 py-1 text-sm cursor-pointer" onClick={() => hanldeStatusInput()}>
+          <DropdownMenuItem className="flex items-center hover:bg-[#313131] rounded-md gap-2 w-full px-2 py-1 text-sm cursor-pointer" onClick={() => handleStatusDelete()}>
             <span><DeleteIcon fontSize="small"/></span>
             <span className="text-left">Delete</span>
           </DropdownMenuItem>

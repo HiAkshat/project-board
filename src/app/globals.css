@@ -120,6 +120,15 @@ body {
   text-overflow: ellipsis;
 }
 
+.truncated-status {
+  /* display: -webkit-box; */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  /* max-height: 2.5em; */
+  text-overflow: ellipsis;
+}
+
 .status-bg{
   background: rgb(255,204,209);
   background: linear-gradient(95deg, rgba(255,204,209,1) 0%, rgba(251,238,204,1) 50%, rgba(204,231,225,1) 100%, rgba(0,0,0,1));
@@ -129,7 +138,7 @@ body {
 }
 
 .title-text{
-  font-size: 72px;
+  /* font-size: 72px; */
   font-weight: 700;
   background: linear-gradient(95deg, rgba(255,204,209,1) 0%, rgba(251,238,204,1) 50%, rgba(204,231,225,1) 100%, rgba(0,0,0,1));
 
@@ -139,8 +148,13 @@ body {
 }
 
 .masonry-col{
-  /* background-color: pink; */
   width: auto !important;
+}
+
+@media screen and (max-width: 640px) {
+  .masonry-col{
+    width: 100% !important;
+  }
 }
 
 .status-input::placeholder {
