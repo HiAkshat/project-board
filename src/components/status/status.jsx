@@ -61,7 +61,7 @@ export default function Status({column, tasks}) {
           
           <div style={{backgroundColor: column.color, height: span1Height}} className={`${statusInputVisible ? "" : "hidden"} flex items-center rounded-sm`}>
             <input style={inputStyle} className={`status-input px-1 py-0 text-sm rounded-sm rounded-r-none text-black outline-none`} value={statusInputText} onChange={e => setStatusInputText(e.target.value)} placeholder="edit status"/>
-            <button onClick={handleSaveStatusInput} disabled={statusInputText==="" ? true : false} className="px-1 py-0 rounded-sm rounded-l-none text-black disabled:text-[#0000006b]"><DoneIcon fontSize="small"/></button>
+            <button style={{backgroundColor: column.color}} onClick={handleSaveStatusInput} disabled={statusInputText==="" ? true : false} className="flex items-center px-1 py-0 rounded-sm rounded-l-none enabled:hover:brightness-110 h-full text-black disabled:text-[#0000006b]"><DoneIcon fontSize="small"/></button>
           </div>
 
           <span className="text-[#B5B5B5] text-sm">{tasks.length}</span>
