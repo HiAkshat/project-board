@@ -143,6 +143,15 @@ body {
   width: auto !important;
 }
 
+.status-input::placeholder {
+  color: rgb(77, 77, 77);
+  /* opacity: 0.9;  */
+}
+
+input::-ms-input-placeholder { /* Edge 12 -18 */
+  color: rgb(77, 77, 77);
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
