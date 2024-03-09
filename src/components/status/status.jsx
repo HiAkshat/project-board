@@ -17,6 +17,7 @@ export default function Status({column, tasks}) {
   
   const [statusInputVisible, setStatusInputVisible] = useState(false)
   const [statusInputText, setStatusInputText] = useState(column.title)
+  const statusInputRef = useRef(null)
 
   const inputStyle = {
     backgroundColor: column.color,
@@ -31,7 +32,20 @@ export default function Status({column, tasks}) {
 
   const hanldeStatusInput = () => {
     setStatusInputVisible(true)
+    setTimeout(() => {
+      if (statusInputRef.current) {
+        statusInputRef.current.focus();
+        statusInputRef.current.setSelectionRange(statusInputText.length, statusInputText.length);
+      }
+    }, 400);
+    console.log("HEY")
   }
+
+  useEffect(() => {
+    if (statusInputVisible && statusInputRef.current) {
+      statusInputRef.current.focus();
+    }
+  }, [statusInputVisible]);
 
   const handleSaveStatusInput = () => {
     const newCol = {
@@ -75,6 +89,7 @@ export default function Status({column, tasks}) {
             } flex items-center rounded-sm`}
           >
             <input
+              ref={statusInputRef}
               style={inputStyle}
               className={`status-input px-1 py-0 text-sm rounded-sm rounded-r-none text-black outline-none`}
               value={statusInputText}
