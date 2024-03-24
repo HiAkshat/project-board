@@ -6,11 +6,13 @@ import TasksList from "../tasksList/tasksList";
 import { projectAtom } from "@/app/atom";
 import { useAtom } from "jotai";
 import { useState, useRef, useEffect } from "react";
+import { draggedOverAtom } from "@/app/atom";
 
 import DoneIcon from '@mui/icons-material/Done';
 
 export default function Status({column, tasks}) {
   const [projectData, setProjectData] = useAtom(projectAtom)
+  const [draggedOver, setDraggedOver] = useAtom(draggedOverAtom)
 
   const span1Ref = useRef(null);
   const [span1Height, setSpan1Height] = useState(0);
@@ -67,8 +69,9 @@ export default function Status({column, tasks}) {
     return
   }
 
+  // console.log(column.id)
   return (
-    <div className="flex flex-col gap-3 w-full md:w-[300px] p-3 bg-[#2A2A2A] rounded-lg">
+    <div className={`flex flex-col gap-3 w-full md:w-[300px] p-3 bg-[#2A2A2A] rounded-lg ${column.id==draggedOver ? "border-2 border-[#575757]" : ""}`}>
       <div className="flex justify-between">
         <div className="flex gap-2 items-center max-w-[70%]">
           <span

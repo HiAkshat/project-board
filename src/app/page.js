@@ -3,12 +3,14 @@
 import { DragDropContext } from "@hello-pangea/dnd";
 import { useAtom } from "jotai";
 import { projectAtom } from "./atom";
+import { draggedOverAtom } from "./atom";
 
 import StatusGrid from "@/components/statusGrid/statusGrid";
 import AddNewStatus from "@/components/addNewStatus/addNewStatus";
 
 export default function Home() {
   const [projectData, setProjectData] = useAtom(projectAtom)
+  const [draggedOver, setDraggedOver] = useAtom(draggedOverAtom)
 
   const reorderCol = (sourceCol, startInd, endInd) => {
     const newTaskIds = Array.from(sourceCol.taskIds)
@@ -33,7 +35,10 @@ export default function Home() {
     const destinationCol = projectData.columns[destination.droppableId];
     
     // Task dragged and dropped at same position
-    if (sourceCol===destinationCol && destination.index===source.index) return
+    if (sourceCol===destinationCol && destination.index===source.index){
+      setDraggedOver("")
+      return
+    }
 
     // Task dragged to different position in same col
     if (sourceCol===destinationCol && destination.index!=source.index){
@@ -46,6 +51,7 @@ export default function Home() {
         }
       }
 
+      setDraggedOver("")
       setProjectData(newProjectData)
       return
     }
@@ -74,12 +80,20 @@ export default function Home() {
       }
     }
 
+    setDraggedOver("")
     setProjectData(newProjectData)
     return
   }
 
+  const onDragUpdate = (result) => {
+    // console.log(result.destination)
+    if (result.destination){
+        setDraggedOver(result.destination.droppableId)
+    }
+  }
+
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
       <main className="flex flex-col gap-5 p-3 md:py-5 md:px-6">
         <span className="title-text text-[54px] md:text-[72px] max-w-fit tracking-tighter md:tracking-normal">Project Board</span>
         <AddNewStatus />
